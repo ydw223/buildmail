@@ -828,12 +828,12 @@ MimeNode.prototype._encodeHeaderValue = function(key, value) {
             }
 
             value = (value || '').toString().replace(/\r?\n|\r/g, ' ');
-            return libmime.encodeWords(value, 'Q', 52);
+            return libmime.encodeWords(value, 'B', 52);
 
         default:
             value = (value || '').toString().replace(/\r?\n|\r/g, ' ');
             // encodeWords only encodes if needed, otherwise the original string is returned
-            return libmime.encodeWords(value, 'Q', 52);
+            return libmime.encodeWords(value, 'B', 52);
     }
 };
 
@@ -855,7 +855,7 @@ MimeNode.prototype._convertAddresses = function(addresses, uniqueList) {
                 // pretty bad solution but what you gonna do
                 // unicode usernames are converted to encoded words
                 // 'jõgeva@hot.ee' will be converted to '=?utf-8?Q?j=C3=B5geva?=@hot.ee'
-                return libmime.encodeWords(user, 'Q', 52);
+                return libmime.encodeWords(user, 'B', 52);
             }).replace(/@.+$/, function(domain) {
                 // domains are punycoded by default
                 // 'jõgeva.ee' will be converted to 'xn--jgeva-dua.ee'
@@ -895,7 +895,7 @@ MimeNode.prototype._encodeAddressName = function(name) {
         if (/^[\x20-\x7e]*$/.test(name)) {
             return '"' + name.replace(/([\\"])/g, '\\$1') + '"';
         } else {
-            return libmime.encodeWord(name, 'Q', 52);
+            return libmime.encodeWord(name, 'B', 52);
         }
     }
     return name;
